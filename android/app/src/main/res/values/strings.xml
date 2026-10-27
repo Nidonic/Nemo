@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nemo</string>
+    <string name="hands_label">Nemo hands</string>
+    <string name="hands_description">Lets Nemo see the screen and tap, swipe and type for you, only while you have asked it to do a task. Nemo stops before paying, sending or deleting, and a STOP button is always on screen while it works.</string>
+</resources>
