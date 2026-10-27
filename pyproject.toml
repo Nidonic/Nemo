@@ -8,6 +8,8 @@ version = "0.2.0"
 description = "Nemo: an open-source personal agent for every device you own. The runtime: agent loop, Sentinel safety gate, memory, hands, hub client and the local daemon."
 readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Nidonic Labs" }]
 dependencies = [
   "fastapi>=0.110",
   "uvicorn[standard]>=0.29",

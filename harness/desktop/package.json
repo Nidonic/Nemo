@@ -4,7 +4,8 @@
   "version": "0.2.0",
   "description": "Nemo for the desktop: the agent daemon in a native window, a tray icon, the hands capsule and native notifications.",
   "main": "src/main.js",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "author": "Nidonic Labs",
   "private": true,
   "scripts": {
     "start": "electron .",

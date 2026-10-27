@@ -2,6 +2,16 @@
 
 **An open-source personal agent for every device you own.** Nemo does things instead of only answering. It works through shells, files, the web, MCP servers and, when nothing else works, the screen itself. It stops to ask before anything you could not undo. It reaches your other devices and keeps going while you're away. It remembers you in files you can read, edit and roll back.
 
+## Watch the launch video
+
+[![Nemo launch video: an open-source personal agent for every device you own](docs/media/nemo-launch-poster.jpg)](docs/media/nemo-launch.mp4)
+
+45 seconds on what Nemo does: it acts through your tools, the Sentinel asks before anything you can't undo, it reaches your other devices, and it remembers you in plain files. ([Watch the MP4](docs/media/nemo-launch.mp4))
+
+## Download
+
+**Nemo Desktop 0.2.0 for Windows** is out: [download the installer from Releases](https://github.com/Nidonic/Nemo/releases/tag/v0.2.0). The desktop app runs the agent daemon, so the machine also needs Python 3.11+ with Nemo installed (see [Quick start](#quick-start)). Android is coming in a later release.
+
 ```
 nemo/        the runtime: agent loop, Sentinel safety gate, vault, memory, tools, hands, hub client, local daemon
 cloud/       the relay: accounts, one-time-code sign-in, metered model proxy, the device hub, conversation sync

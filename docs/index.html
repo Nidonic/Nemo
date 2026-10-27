@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nemo by Nidonic Labs</title>
+    <meta name="description" content="Nemo is an open-source personal agent for every device you own. It does things instead of only answering, and it asks before anything you can't undo." />
+    <meta property="og:title" content="Nemo by Nidonic Labs" />
+    <meta property="og:description" content="An open-source personal agent for every device you own." />
+    <meta property="og:image" content="media/nemo-launch-cover.jpg" />
+    <meta name="theme-color" content="#0b1110" />
+    <link rel="icon" type="image/png" href="media/icon.png" />
+    <style>
+      :root {
+        --ground: #0b1110;
+        --bg: #0f1514;
+        --panel: #161e1d;
+        --line: #26302f;
+        --ink: #e2ebe9;
+        --muted: #8c9c99;
+        --accent: #2dd4bf;
+        --accent-ink: #052421;
+        --accent-soft: #12322f;
+        --warn: #fbbf24;
+        --ok: #4ade80;
+        --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --mono: ui-monospace, "Cascadia Code", Consolas, Menlo, monospace;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--ground);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 17px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: clip;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* nav */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(11, 17, 16, 0.82);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      nav .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .brand:hover {
+        text-decoration: none;
+      }
+      .brand img {
+        width: 30px;
+        height: 30px;
+      }
+      .brand small {
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .navlinks {
+        display: flex;
+        gap: 24px;
+        font-size: 15px;
+      }
+      .navlinks a {
+        color: var(--muted);
+      }
+      .navlinks a:hover {
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      /* buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 22px;
+        border-radius: 12px;
+        font-weight: 650;
+        font-size: 16px;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        background: var(--panel);
+        transition: transform 0.15s ease, border-color 0.15s ease;
+      }
+      .btn:hover {
+        text-decoration: none;
+        transform: translateY(-1px);
+        border-color: var(--muted);
+      }
+      .btn.primary {
+        background: var(--accent);
+        color: var(--accent-ink);
+        border-color: var(--accent);
+      }
+      .btn.primary:hover {
+        border-color: var(--ink);
+      }
+      .btn svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      /* hero */
+      .hero {
+        position: relative;
+        padding: 96px 0 72px;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(var(--line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 56px 56px;
+        opacity: 0.3;
+        mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 70%);
+        -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 70%);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 900px;
+        height: 900px;
+        left: 50%;
+        top: -380px;
+        margin-left: -450px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(45, 212, 191, 0.18), transparent 62%);
+        pointer-events: none;
+      }
+      .hero > .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      .hero-icon {
+        width: 96px;
+        height: 96px;
+        margin-bottom: 28px;
+      }
+      .eyebrow {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent-soft);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 24px;
+      }
+      h1 {
+        font-size: clamp(40px, 7vw, 76px);
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+        font-weight: 800;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      h1 .accent {
+        color: var(--accent);
+      }
+      .lede {
+        font-size: clamp(18px, 2.2vw, 21px);
+        color: var(--muted);
+        max-width: 700px;
+        margin: 24px auto 0;
+      }
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 36px;
+      }
+      .fine {
+        margin-top: 16px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      /* video */
+      .video {
+        margin: 0 auto;
+        max-width: 1000px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.55);
+        background: var(--bg);
+      }
+      .video video {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      /* sections */
+      section {
+        padding: 88px 0;
+      }
+      .section-head {
+        max-width: 680px;
+        margin-bottom: 44px;
+      }
+      .kicker {
+        font-family: var(--mono);
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+      h2 {
+        font-size: clamp(30px, 4.2vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 750;
+      }
+      .section-head p {
+        color: var(--muted);
+        margin-top: 14px;
+        font-size: 18px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 28px;
+      }
+      .card .num {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--accent);
+      }
+      .card h3 {
+        font-size: 20px;
+        margin: 10px 0 8px;
+        letter-spacing: -0.01em;
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 15.5px;
+      }
+
+      /* loop */
+      .loop {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .step {
+        font-family: var(--mono);
+        font-size: 14px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .arrow {
+        color: var(--muted);
+      }
+
+      /* platforms */
+      .platforms {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+      }
+      .platform {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 30px;
+      }
+      .platform h3 {
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .platform p {
+        color: var(--muted);
+        font-size: 15.5px;
+        flex: 1;
+      }
+      .badge {
+        font-family: var(--mono);
+        font-size: 12px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--ok);
+        color: var(--ok);
+      }
+      .badge.soon {
+        border-color: var(--warn);
+        color: var(--warn);
+      }
+      .platform .btn {
+        align-self: flex-start;
+      }
+
+      /* code */
+      pre {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 22px 24px;
+        overflow-x: auto;
+        font-family: var(--mono);
+        font-size: 14.5px;
+        line-height: 1.75;
+        color: var(--ink);
+      }
+      pre .c {
+        color: var(--muted);
+      }
+      pre .p {
+        color: var(--accent);
+        user-select: none;
+      }
+
+      /* footer */
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 48px 0 56px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 28px;
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 24px;
+      }
+      .foot-links a {
+        color: var(--muted);
+      }
+      .foot-links a:hover {
+        color: var(--ink);
+      }
+
+      @media (max-width: 720px) {
+        .navlinks {
+          display: none;
+        }
+        .hero {
+          padding: 64px 0 48px;
+        }
+        section {
+          padding: 64px 0;
+        }
+        .cta .btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <a class="brand" href="#top"><img src="media/icon.png" alt="" />Nemo <small>by Nidonic Labs</small></a>
+        <div class="navlinks">
+          <a href="#video">Video</a>
+          <a href="#features">Features</a>
+          <a href="#download">Download</a>
+          <a href="https://github.com/Nidonic/Nemo">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="wrap">
+        <img class="hero-icon" src="media/icon.png" alt="Nemo logo" />
+        <div><span class="eyebrow">v0.2.0 · Open source · MIT</span></div>
+        <h1>A personal agent that <span class="accent">does</span>, not just answers.</h1>
+        <p class="lede">
+          Nemo is an open-source agent for every device you own. It works through shells, files, the web, MCP servers and the screen itself.
+          It asks before anything you can't undo, and it remembers you in files you can read.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="https://github.com/Nidonic/Nemo/releases/download/v0.2.0/Nemo-Setup-0.2.0-x64.exe">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zm8.5 1.1L21 21v-8.5h-9.5zm0-15.2v7.1H21V3z" /></svg>
+            Download for Windows
+          </a>
+          <a class="btn" href="https://github.com/Nidonic/Nemo">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" /></svg>
+            View on GitHub
+          </a>
+        </div>
+        <p class="fine">Windows 10/11 x64 · Needs Python 3.11+ for the agent runtime · <a href="https://github.com/Nidonic/Nemo/releases">All releases</a></p>
+      </div>
+    </header>
+
+    <section id="video" style="padding-top: 24px">
+      <div class="wrap">
+        <div class="video">
+          <video src="media/nemo-launch.mp4" poster="media/nemo-launch-cover.jpg" controls muted playsinline preload="metadata"></video>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">What it does</div>
+          <h2>One agent. Your tools, your devices, your rules.</h2>
+          <p>Nemo runs on your machine and talks to the model you choose: Anthropic, OpenAI, DeepSeek, Gemini, Ollama or any OpenAI-compatible endpoint.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="num">01 · Hands</div>
+            <h3>It does the work</h3>
+            <p>A ladder of action: CLI, MCP and APIs first, then direct HTTP, then a browser. When nothing else works, it uses the screen, with a STOP button always in reach.</p>
+          </div>
+          <div class="card">
+            <div class="num">02 · Sentinel</div>
+            <h3>It asks first</h3>
+            <p>Every tool call is rated SAFE, MODERATE or SENSITIVE. Destructive commands, payments and sends always ask, and once private data has been read, nothing leaves for an unknown host without your OK.</p>
+          </div>
+          <div class="card">
+            <div class="num">03 · Devices</div>
+            <h3>It reaches your devices</h3>
+            <p>Type <code>@pc tidy my Downloads</code> on your phone. Your PC does the work, and its approval questions come back to the device in your hand.</p>
+          </div>
+          <div class="card">
+            <div class="num">04 · Memory</div>
+            <h3>It remembers, in plain files</h3>
+            <p>SOUL.md, USER.md and GLOBAL.md, plus facts you can search. A nightly "dream" tidies them up, and every change can be rolled back.</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 18px">
+          <div class="num">The agent loop</div>
+          <div class="loop" style="margin-top: 12px">
+            <span class="step">Think</span><span class="arrow">→</span><span class="step">Gate</span><span class="arrow">→</span><span class="step">Execute</span><span class="arrow">→</span><span class="step">Observe</span><span class="arrow">↺</span>
+          </div>
+          <p style="margin-top: 14px">One turn at a time per conversation. Messages sent mid-run join the next step, stuck loops stop themselves, and secrets stay in an encrypted vault, never in config.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Get Nemo</div>
+          <h2>Download</h2>
+        </div>
+        <div class="platforms">
+          <div class="platform">
+            <h3>Windows <span class="badge">Available</span></h3>
+            <p>The desktop app: the agent in a native window, a tray icon, the hands capsule and native notifications. Ctrl+Shift+Space shows Nemo, and Ctrl+Shift+. stops every screen action.</p>
+            <a class="btn primary" href="https://github.com/Nidonic/Nemo/releases/download/v0.2.0/Nemo-Setup-0.2.0-x64.exe">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zm8.5 1.1L21 21v-8.5h-9.5zm0-15.2v7.1H21V3z" /></svg>
+              Nemo-Setup-0.2.0-x64.exe
+            </a>
+          </div>
+          <div class="platform">
+            <h3>Android <span class="badge soon">Coming soon</span></h3>
+            <p>A native Kotlin app with its own agent, hands through Accessibility, and Sentinel approvals for your PC's tasks. The source is already <a href="https://github.com/Nidonic/Nemo/tree/main/android">on GitHub</a>.</p>
+            <a class="btn" href="https://github.com/Nidonic/Nemo/releases">Watch releases</a>
+          </div>
+          <div class="platform">
+            <h3>From source <span class="badge">Any OS</span></h3>
+            <p>Run the daemon and web console anywhere Python 3.11+ runs: Windows, macOS or Linux.</p>
+            <a class="btn" href="https://github.com/Nidonic/Nemo#quick-start">Quick start guide</a>
+          </div>
+        </div>
+        <pre style="margin-top: 18px"><span class="c"># from source</span>
+<span class="p">$ </span>git clone https://github.com/Nidonic/Nemo.git &amp;&amp; cd Nemo
+<span class="p">$ </span>pip install -e ".[all]"
+<span class="p">$ </span>nemo                <span class="c"># daemon + console on http://127.0.0.1:7860</span></pre>
+        <p class="fine" style="text-align: left">The Windows installer isn't code-signed yet, so SmartScreen may warn on first run: click <em>More info → Run anyway</em>.</p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div>
+          <a class="brand" href="#top"><img src="media/icon.png" alt="" />Nemo</a>
+          <p style="margin-top: 10px">© 2026 Nidonic Labs · Released under the <a href="https://github.com/Nidonic/Nemo/blob/main/LICENSE">MIT License</a></p>
+        </div>
+        <div class="foot-links">
+          <a href="https://github.com/Nidonic/Nemo">Source code</a>
+          <a href="https://github.com/Nidonic/Nemo/releases">Releases</a>
+          <a href="https://github.com/Nidonic/Nemo/issues">Issues</a>
+          <a href="https://github.com/Nidonic/Nemo#readme">Documentation</a>
+          <a href="https://github.com/Nidonic/Nemo/blob/main/LICENSE">License</a>
+          <a href="https://github.com/Nidonic">Nidonic Labs on GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

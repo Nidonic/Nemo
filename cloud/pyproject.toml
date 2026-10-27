@@ -7,6 +7,8 @@ name = "nemo-cloud"
 version = "0.1.0"
 description = "Nemo relay: accounts, one-time-code sign-in, a metered model proxy, the multi-device hub and conversation sync."
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Nidonic Labs" }]
 dependencies = [
   "fastapi>=0.110",
   "uvicorn[standard]>=0.29",
