@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nemo-agent"
+version = "0.2.0"
+description = "Nemo: an open-source personal agent for every device you own. The runtime: agent loop, Sentinel safety gate, memory, hands, hub client and the local daemon."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.29",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+  "cryptography>=42",
+  "typer>=0.12",
+  "rich>=13.7",
+  "html2text>=2024.2.26",
+  "ddgs>=9.0",
+  "pillow>=10",
+  "websockets>=13",
+  "tzdata>=2024.1; platform_system == 'Windows'",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.2"]
+browser = ["playwright>=1.45"]
+hands = ["mss>=9", "pyautogui>=0.9.54", "pyperclip>=1.8"]
+all = ["mcp>=1.2", "playwright>=1.45", "mss>=9", "pyautogui>=0.9.54", "pyperclip>=1.8"]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+nemo = "nemo.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["nemo"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "cloud/tests"]

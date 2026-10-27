@@ -1,0 +1,27 @@
+{
+  "name": "nemo-desktop",
+  "productName": "Nemo",
+  "version": "0.2.0",
+  "description": "Nemo for the desktop: the agent daemon in a native window, a tray icon, the hands capsule and native notifications.",
+  "main": "src/main.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "smoke": "electron . --smoke",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "dev.nemo.desktop",
+    "productName": "Nemo",
+    "files": ["src/**", "assets/**"],
+    "win": { "target": "nsis", "icon": "assets/icon.ico" },
+    "mac": { "target": "dmg", "icon": "assets/icon.png", "category": "public.app-category.productivity" },
+    "linux": { "target": ["AppImage", "deb"], "icon": "assets/icon.png", "category": "Utility" },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true }
+  }
+}

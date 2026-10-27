@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f6f8f7;
+  --color-panel: #ffffff;
+  --color-side: #edf2f1;
+  --color-ink: #17201f;
+  --color-muted: #5f6e6b;
+  --color-line: #dbe3e1;
+  --color-accent: #0f8f86;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #dcf3ef;
+  --color-warn: #a16207;
+  --color-warn-soft: #fef6e4;
+  --color-danger: #c2410c;
+  --color-ok: #15803d;
+  --color-code: #eff3f2;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", Consolas, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f1514;
+    --color-panel: #161e1d;
+    --color-side: #0b1110;
+    --color-ink: #e2ebe9;
+    --color-muted: #8c9c99;
+    --color-line: #26302f;
+    --color-accent: #2dd4bf;
+    --color-accent-ink: #052421;
+    --color-accent-soft: #12322f;
+    --color-warn: #fbbf24;
+    --color-warn-soft: #2b2310;
+    --color-danger: #fb923c;
+    --color-ok: #4ade80;
+    --color-code: #0c1211;
+    color-scheme: dark;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.prose-nemo {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+.prose-nemo > :first-child { margin-top: 0; }
+.prose-nemo > :last-child { margin-bottom: 0; }
+.prose-nemo p, .prose-nemo ul, .prose-nemo ol, .prose-nemo pre, .prose-nemo table, .prose-nemo blockquote { margin: 0.6em 0; }
+.prose-nemo h1, .prose-nemo h2, .prose-nemo h3 { font-weight: 650; margin: 0.9em 0 0.4em; }
+.prose-nemo h1 { font-size: 1.25em; }
+.prose-nemo h2 { font-size: 1.12em; }
+.prose-nemo ul { list-style: disc; padding-left: 1.4em; }
+.prose-nemo ol { list-style: decimal; padding-left: 1.4em; }
+.prose-nemo a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
+.prose-nemo pre {
+  background: var(--color-code); border: 1px solid var(--color-line); border-radius: 10px;
+  padding: 10px 12px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px;
+}
+.prose-nemo :not(pre) > code { background: var(--color-code); border-radius: 5px; padding: 1px 5px; font-family: var(--font-mono); font-size: 0.9em; }
+.prose-nemo table { border-collapse: collapse; display: block; overflow-x: auto; }
+.prose-nemo th, .prose-nemo td { border: 1px solid var(--color-line); padding: 4px 10px; text-align: left; }
+.prose-nemo blockquote { border-left: 3px solid var(--color-line); padding-left: 12px; color: var(--color-muted); }
+
+.cursor::after { content: "▍"; color: var(--color-accent); animation: blink 1s infinite; margin-left: 1px; }
+@keyframes blink { 50% { opacity: 0.2; } }
+.safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0px); }

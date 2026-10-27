@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; img-src 'self'">
+  <title>Nemo</title>
+  <style>
+    :root { color-scheme: light dark; --bg: #f6f8f7; --panel: #fff; --ink: #17201f; --muted: #5f6e6b; --line: #dbe3e1; --accent: #0f8f86; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #0f1514; --panel: #161e1d; --ink: #e2ebe9; --muted: #8c9c99; --line: #26302f; --accent: #2dd4bf; } }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--ink); font: 15px/1.55 system-ui, "Segoe UI", sans-serif; }
+    .card { max-width: 520px; margin: 24px; padding: 28px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+    img { width: 64px; }
+    h1 { font-size: 22px; margin: 12px 0 4px; }
+    p { color: var(--muted); }
+    pre { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; overflow-x: auto; font: 13px ui-monospace, Consolas, monospace; color: var(--ink); }
+    button { border: 0; border-radius: 10px; padding: 10px 16px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; }
+    .err { color: #c2410c; font-size: 13px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="../assets/icon.png" alt="">
+    <h1 id="title">Starting Nemo…</h1>
+    <p id="text">Starting the agent on this computer.</p>
+    <div id="help" hidden>
+      <p>Nemo Desktop runs the Nemo agent, which needs Python 3.11 or newer. Install it once:</p>
+      <pre>pip install "nemo-agent[all]"</pre>
+      <p>Or point the app at a Python that already has it, by setting <code>NEMO_PYTHON</code> to that interpreter.</p>
+    </div>
+    <p class="err" id="error"></p>
+    <button id="retry" hidden>Try again</button>
+  </div>
+  <script src="setup.js"></script>
+</body>
+</html>

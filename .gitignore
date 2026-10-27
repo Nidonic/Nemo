@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+.nemo/
+*.db
+*.db-wal
+*.db-shm
+web/node_modules/
+# the built console (nemo/static/console) is committed so `pip install` needs no Node
+harness/desktop/node_modules/
+harness/desktop/dist/

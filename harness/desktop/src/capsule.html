@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; img-src 'self'">
+  <style>
+    :root { color-scheme: light dark; --panel: rgba(255,255,255,.96); --ink: #17201f; --muted: #5f6e6b; --line: #dbe3e1; }
+    @media (prefers-color-scheme: dark) { :root { --panel: rgba(22,30,29,.96); --ink: #e2ebe9; --muted: #8c9c99; --line: #26302f; } }
+    html, body { margin: 0; background: transparent; font: 14px system-ui, "Segoe UI", "PingFang SC", sans-serif; overflow: hidden; user-select: none; }
+    .pill {
+      margin: 6px; height: 52px; box-sizing: border-box; display: flex; align-items: center; gap: 10px;
+      padding: 6px 6px 6px 8px; border-radius: 999px; background: var(--panel); color: var(--ink);
+      border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.18); -webkit-app-region: drag;
+    }
+    img { width: 34px; height: 34px; border-radius: 50%; animation: pulse 1.6s ease-in-out infinite; }
+    .text { flex: 1; min-width: 0; }
+    .where { font-size: 11.5px; color: var(--muted); }
+    .label { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    button {
+      -webkit-app-region: no-drag; border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer;
+      background: #dc2626; color: #fff; font-weight: 800; letter-spacing: .03em; font-size: 13px;
+    }
+    button:hover { filter: brightness(1.1); }
+    @keyframes pulse { 50% { opacity: .55; } }
+  </style>
+</head>
+<body>
+  <div class="pill">
+    <img src="../assets/icon.png" alt="">
+    <div class="text">
+      <div class="where" id="where">Nemo is using this computer</div>
+      <div class="label" id="label">Working…</div>
+    </div>
+    <button id="stop" title="Stop now (Ctrl+Shift+.)">■ STOP</button>
+  </div>
+  <script src="capsule.js"></script>
+</body>
+</html>
